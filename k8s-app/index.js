@@ -20,5 +20,17 @@ const deployment = new k8s.apps.v1.Deployment("app", {
     }
 });
 
+const service = new k8s.app.v1.Service("app", {
+    spec: {
+        selector: { matchLabels: appLabels },
+        ports: [{
+            port: 80,
+            targetPort: 80,
+        }],
+        type: 'LoadBalancer',
+    },
+});
+
 exports.image = image.imageName;
 exports.name = deployment.metadata.name;
+exports.externalAddress = service.loadBalancer.apply(status => `http://${status.ingress[0].hostname}:${status.ingress[0].ports[0].port}/`);
