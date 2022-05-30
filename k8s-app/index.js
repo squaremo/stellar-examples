@@ -5,6 +5,7 @@ const k8s = require("@pulumi/kubernetes");
 const image = new docker.Image("app-image", {
     build: process.env.APP_DIR,
     imageName: "app",
+    skipPush: true, // for docker desktop; would need it otherwise
 });
 
 const appLabels = { app: "app" };
