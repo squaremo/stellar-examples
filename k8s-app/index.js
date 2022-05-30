@@ -33,4 +33,7 @@ const service = new k8s.core.v1.Service("app", {
 
 exports.image = image.imageName;
 exports.name = deployment.metadata.name;
-exports.externalAddress = service.loadBalancer.apply(status => `http://${status.ingress[0].hostname}:${status.ingress[0].ports[0].port}/`);
+exports.externalAddress = service.status.apply(s => {
+    const lb = service.status.loadBalancer;
+    return `http://${lb.ingress[0].hostname}:${lb.ingress[0].ports[0].port}/`;
+});
