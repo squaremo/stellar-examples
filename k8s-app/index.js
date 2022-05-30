@@ -14,7 +14,7 @@ const deployment = new k8s.apps.v1.Deployment("app", {
         replicas: 1,
         template: {
             metadata: { labels: appLabels },
-            spec: { containers: [{ name: app, image: image.imageName }] }
+            spec: { containers: [{ name: 'app', image: image.imageName }] }
         }
     }
 });
