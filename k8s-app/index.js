@@ -20,7 +20,7 @@ const deployment = new k8s.apps.v1.Deployment("app", {
     }
 });
 
-const service = new k8s.app.v1.Service("app", {
+const service = new k8s.core.v1.Service("app", {
     spec: {
         selector: { matchLabels: appLabels },
         ports: [{
